@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: uuidulid-example-api
+  datasource:
+    url: jdbc:h2:mem:notes;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+  mvc:
+    problemdetails:
+      enabled: true
+  h2:
+    console:
+      enabled: true
+
+uuidulid:
+  # Strictly increasing ids within a millisecond. Set to false if ids must not be guessable.
+  monotonic: true

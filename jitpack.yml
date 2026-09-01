@@ -1,0 +1,8 @@
+# Lets any tag/commit of this repository be consumed straight from JitPack:
+#   groupId    com.github.bnymnDev.uuidulid
+#   artifactId uuidulid-core (or any other module)
+#   version    a git tag such as v0.1.0, or a commit hash
+jdk:
+  - openjdk17
+install:
+  - ./mvnw -B -ntp install -DskipTests -pl '!uuidulid-example-api'
