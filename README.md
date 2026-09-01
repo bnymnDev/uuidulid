@@ -1,5 +1,7 @@
 # uuidulid
 
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.bnymndev/uuidulid-core)](https://central.sonatype.com/artifact/io.github.bnymndev/uuidulid-core)
+
 ULID and UUIDv7 for Java, plus the glue you need to use them as identifiers in a REST API:
 Jackson serialisation, JPA/Hibernate mapping and Spring Boot auto-configuration.
 
@@ -29,33 +31,56 @@ compile for Java 7 anymore.
 
 ## Getting it
 
-The artifacts are not on Maven Central. Either build them yourself:
-
-```bash
-git clone https://github.com/bnymnDev/uuidulid.git
-cd uuidulid
-./mvnw install -DskipTests
-```
-
-and then depend on `io.github.bnymndev:<artifact>:0.1.0-SNAPSHOT`, or pull them through JitPack:
+All modules are on Maven Central under the group `io.github.bnymndev`. Import the BOM once and
+leave the versions off the individual modules:
 
 ```xml
-<repositories>
-  <repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
-  </repository>
-</repositories>
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>io.github.bnymndev</groupId>
+      <artifactId>uuidulid-bom</artifactId>
+      <version>0.1.0</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
 
+<dependencies>
+  <dependency>
+    <groupId>io.github.bnymndev</groupId>
+    <artifactId>uuidulid-spring-boot-starter</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>io.github.bnymndev</groupId>
+    <artifactId>uuidulid-hibernate</artifactId>
+  </dependency>
+</dependencies>
+```
+
+Or a single module with an explicit version:
+
+```xml
 <dependency>
-  <groupId>com.github.bnymnDev.uuidulid</groupId>
-  <artifactId>uuidulid-spring-boot-starter</artifactId>
-  <version>main-SNAPSHOT</version> <!-- or a tag / commit hash -->
+  <groupId>io.github.bnymndev</groupId>
+  <artifactId>uuidulid-core</artifactId>
+  <version>0.1.0</version>
 </dependency>
+```
+
+Gradle:
+
+```kotlin
+implementation("io.github.bnymndev:uuidulid-core:0.1.0")
 ```
 
 For a Spring Boot 3 app the starter is enough; add `uuidulid-hibernate` if `Ulid` is used as an
 entity id. Without Spring, `uuidulid-core` is all you need (plus `uuidulid-jackson` for JSON).
+
+To try unreleased changes, build from source with `./mvnw install` and depend on the
+`-SNAPSHOT` version from the POM, or use [JitPack](https://jitpack.io/#bnymnDev/uuidulid) with
+`com.github.bnymnDev.uuidulid:<artifact>:main-SNAPSHOT`.
 
 ## ULID
 
