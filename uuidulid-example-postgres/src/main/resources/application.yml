@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: uuidulid-example-postgres
+  datasource:
+    url: jdbc:postgresql://localhost:5432/uuidulid
+    username: uuidulid
+    password: uuidulid
+  jpa:
+    open-in-view: false
+    hibernate:
+      # The schema is owned by Flyway; Hibernate only checks that the entities match it.
+      ddl-auto: validate
+  mvc:
+    problemdetails:
+      enabled: true
+
+uuidulid:
+  monotonic: true

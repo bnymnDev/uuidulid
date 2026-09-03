@@ -49,6 +49,13 @@
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
     </dependency>
+    <!-- Optional: describes Ulid as a string in generated OpenAPI documents when springdoc is present. -->
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-common</artifactId>
+      <version>${springdoc.version}</version>
+      <optional>true</optional>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -58,6 +65,12 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+      <version>${springdoc.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

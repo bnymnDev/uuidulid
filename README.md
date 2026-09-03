@@ -22,6 +22,7 @@ id.toUuid();               // same 128 bits as a java.util.UUID
 | `uuidulid-jpa` | 8 | Jakarta Persistence 3.x |
 | `uuidulid-jpa-javax` | 8 | `javax.persistence` 2.x |
 | `uuidulid-hibernate` | 11 | Hibernate ORM 6.2+ |
+| `uuidulid-validation` | 8 | Jakarta Bean Validation 3.x |
 | `uuidulid-spring-boot-starter` | 17 | Spring Boot 3.x |
 | `uuidulid-spring-boot2-starter` | 8 | Spring Boot 2.x |
 | `uuidulid-bom` | | pins all of the above |
@@ -168,6 +169,7 @@ classpath you get, without configuration:
 - `UlidFactory` and `Uuid7Factory` beans (they also implement `Supplier`)
 - conversion for `@PathVariable Ulid`, `@RequestParam Ulid` and `Ulid` properties; bad input is a 400
 - the Jackson module, so `Ulid` fields are plain strings in request and response bodies
+- with springdoc on the classpath: `Ulid` documented as a 26-character string in the OpenAPI document (Boot 3 starter)
 
 ```java
 @RestController
@@ -251,6 +253,48 @@ For other JPA providers, or for `Ulid` columns that aren't the id, `uuidulid-jpa
 
 `java.util.UUID` (and therefore UUIDv7) needs no converter.
 
+## UUIDv7 in the database, ULID in the API
+
+A ULID and a UUIDv7 are the same 128 bits, both starting with the creation time in milliseconds.
+So a table can use PostgreSQL's native `uuid` type with real UUIDv7 keys, while the API hands out
+the 26-character form. The translation is a re-encoding, not a lookup:
+
+```java
+UUID id      = uuid7s.create();          // 0199a3f2-8c1e-7d4b-9a02-7f3c1e9b5d21, stored in a uuid column
+Ulid publicId = Ulid.fromUuid(id);       // 01K6HZ53GYFN5SK04ZWF0YKDT1, returned by the API
+publicId.toUuid().equals(id);            // true
+```
+
+Ordering survives the round trip: PostgreSQL compares `uuid` values byte-wise, which is the order
+of UUIDv7 creation time and of the ULID strings. A ULID cursor from the API can be used directly
+in `WHERE id > ?`, and a time window becomes a key range through `Ulid.min(from).toUuid()` and
+`Ulid.max(to).toUuid()`.
+
+Because any 26-character string maps to some 128-bit value, an API should only accept ULIDs that
+encode a UUIDv7 (`Uuids.isV7(ulid.toUuid())`) and answer everything else with 400. That keeps
+callers from probing the key space and avoids misleading 404s.
+
+`uuidulid-example-postgres` shows the whole pattern: Flyway migration with a `uuid` primary key,
+an entity keyed by `UUID`, DTOs typed `Ulid`, a small `PublicId` translator at the boundary, and
+keyset pagination plus time-window queries that run on the primary key alone. Its tests start a
+real PostgreSQL 17 through embedded binaries from Maven Central, so no Docker is needed to run
+them. To run the app itself:
+
+```bash
+./mvnw -pl uuidulid-example-postgres spring-boot:run     # starts docker-compose.yml when Docker is available
+```
+
+## Bean Validation
+
+For request fields that have to stay `String`, `uuidulid-validation` provides a constraint:
+
+```java
+public record MoveRequest(@NotNull @ValidUlid String targetId) { }
+```
+
+`null` passes (combine with `@NotNull`), malformed values fail with "must be a valid ULID". Where a
+field can be typed `Ulid`, prefer that: the Jackson module then rejects bad input before validation.
+
 ## Jackson without Spring
 
 ```java
@@ -261,9 +305,10 @@ ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
 
 Values and map keys are supported. Invalid input throws `InvalidFormatException`.
 
-## Example application
+## Example applications
 
-`uuidulid-example-api` is a Spring Boot 3 app with an in-memory H2 database that uses all of the above.
+`uuidulid-example-api` is a Spring Boot 3 app with an in-memory H2 database that uses `Ulid` end to end,
+including as the entity id. `uuidulid-example-postgres` is the UUIDv7-inside, ULID-outside variant described above.
 
 ```bash
 ./mvnw -pl uuidulid-example-api spring-boot:run

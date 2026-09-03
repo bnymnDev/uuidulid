@@ -29,9 +29,9 @@ jobs:
       matrix:
         include:
           - java: 8
-            modules: uuidulid-core,uuidulid-jackson,uuidulid-jpa,uuidulid-jpa-javax,uuidulid-spring-boot2-starter
+            modules: uuidulid-core,uuidulid-jackson,uuidulid-jpa,uuidulid-jpa-javax,uuidulid-validation,uuidulid-spring-boot2-starter
           - java: 11
-            modules: uuidulid-core,uuidulid-jackson,uuidulid-jpa,uuidulid-jpa-javax,uuidulid-spring-boot2-starter,uuidulid-hibernate
+            modules: uuidulid-core,uuidulid-jackson,uuidulid-jpa,uuidulid-jpa-javax,uuidulid-validation,uuidulid-spring-boot2-starter,uuidulid-hibernate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

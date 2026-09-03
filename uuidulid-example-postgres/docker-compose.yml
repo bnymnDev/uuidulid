@@ -1,0 +1,11 @@
+# Database for running the example locally: ./mvnw -pl uuidulid-example-postgres spring-boot:run
+# Spring Boot starts this file automatically when Docker is available.
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: uuidulid
+      POSTGRES_USER: uuidulid
+      POSTGRES_PASSWORD: uuidulid
+    ports:
+      - "5432:5432"

@@ -21,7 +21,9 @@ import org.springframework.context.annotation.Configuration;
  *       {@code @PathVariable Ulid id} and {@code @RequestParam Ulid after} work in Spring MVC
  *       and WebFlux, and {@code Ulid} properties bind from configuration;</li>
  *   <li>the Jackson {@link UlidModule}, so that {@code Ulid} fields serialise as strings in
- *       every {@code @RestController} response and request body.</li>
+ *       every {@code @RestController} response and request body;</li>
+ *   <li>an OpenAPI schema for {@code Ulid} when springdoc is on the classpath, see
+ *       {@link UlidOpenApi}.</li>
  * </ul>
  *
  * <p>Every bean is conditional on the application not defining its own of the same type.
@@ -52,6 +54,19 @@ public class UuidulidAutoConfiguration {
     @ConditionalOnMissingBean
     public UlidToStringConverter ulidToStringConverter() {
         return new UlidToStringConverter();
+    }
+
+    /**
+     * Tells springdoc to document {@code Ulid} as a 26-character string, so OpenAPI documents and
+     * Swagger UI show the textual form instead of the value type's internals.
+     */
+    @Configuration(proxyBeanMethods = false)
+    @ConditionalOnClass(name = "org.springdoc.core.utils.SpringDocUtils")
+    static class OpenApiConfiguration {
+
+        OpenApiConfiguration() {
+            UlidOpenApi.register();
+        }
     }
 
     /** Registers the Jackson module when Jackson is on the classpath. */
