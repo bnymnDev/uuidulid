@@ -40,6 +40,13 @@
       <version>4.0.2</version>
       <scope>test</scope>
     </dependency>
+    <!-- The Spring Boot BOM in the parent manages jboss-logging 3.6, which needs Java 11; 3.4 still runs on Java 8. -->
+    <dependency>
+      <groupId>org.jboss.logging</groupId>
+      <artifactId>jboss-logging</artifactId>
+      <version>3.4.3.Final</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
