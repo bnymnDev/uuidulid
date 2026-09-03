@@ -41,7 +41,7 @@ leave the versions off the individual modules:
     <dependency>
       <groupId>io.github.bnymndev</groupId>
       <artifactId>uuidulid-bom</artifactId>
-      <version>0.1.0</version>
+      <version>0.2.0</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -66,14 +66,14 @@ Or a single module with an explicit version:
 <dependency>
   <groupId>io.github.bnymndev</groupId>
   <artifactId>uuidulid-core</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
 </dependency>
 ```
 
 Gradle:
 
 ```kotlin
-implementation("io.github.bnymndev:uuidulid-core:0.1.0")
+implementation("io.github.bnymndev:uuidulid-core:0.2.0")
 ```
 
 For a Spring Boot 3 app the starter is enough; add `uuidulid-hibernate` if `Ulid` is used as an
