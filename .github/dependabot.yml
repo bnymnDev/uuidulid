@@ -5,6 +5,10 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      # hibernate-validator 8+ requires Java 17; uuidulid-validation stays on Java 8
+      - dependency-name: "org.hibernate.validator:hibernate-validator"
+        versions: [">=8.0.0"]
     groups:
       maven-plugins:
         patterns:
