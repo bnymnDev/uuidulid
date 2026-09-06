@@ -19,7 +19,7 @@
     <maven.compiler.release>17</maven.compiler.release>
     <!-- PostgreSQL version the tests run against; the binaries come from Maven Central, no Docker needed. -->
     <embedded-postgres.version>2.2.2</embedded-postgres.version>
-    <embedded-postgres-binaries.version>17.11.0</embedded-postgres-binaries.version>
+    <embedded-postgres-binaries.version>18.6.0</embedded-postgres-binaries.version>
   </properties>
 
   <dependencyManagement>
