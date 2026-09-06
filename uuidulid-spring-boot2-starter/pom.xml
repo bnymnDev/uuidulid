@@ -15,7 +15,7 @@
   <description>Spring Boot 2.x auto-configuration for ULID and UUIDv7 (Java 8+).</description>
 
   <properties>
-    <spring-boot2.version>2.7.18</spring-boot2.version>
+    <spring-boot2.version>4.1.1</spring-boot2.version>
   </properties>
 
   <!-- This module's own BOM import takes precedence over the Spring Boot 3 BOM inherited from the parent. -->
