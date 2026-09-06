@@ -1,0 +1,53 @@
+name: Bug report
+description: Something doesn't work as documented
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: uuidulid version
+      placeholder: e.g. 0.2.0
+    validations:
+      required: true
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      multiple: true
+      options:
+        - uuidulid-core
+        - uuidulid-jackson
+        - uuidulid-jpa
+        - uuidulid-jpa-javax
+        - uuidulid-hibernate
+        - uuidulid-validation
+        - uuidulid-spring-boot-starter
+        - uuidulid-spring-boot2-starter
+        - uuidulid-bom
+        - example applications
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Java version and relevant framework versions
+      placeholder: e.g. JDK 17, Spring Boot 3.5.9, Hibernate 6.6, PostgreSQL 17
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Include the full stack trace if there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: A minimal code snippet or test that shows the problem.
+      render: java

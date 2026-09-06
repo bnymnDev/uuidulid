@@ -1,6 +1,9 @@
 # uuidulid
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.bnymndev/uuidulid-core)](https://central.sonatype.com/artifact/io.github.bnymndev/uuidulid-core)
+[![Build](https://github.com/bnymnDev/uuidulid/actions/workflows/build.yml/badge.svg)](https://github.com/bnymnDev/uuidulid/actions/workflows/build.yml)
+[![Java 8+](https://img.shields.io/badge/Java-8%2B-blue)](#modules)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ULID and UUIDv7 for Java, plus the glue you need to use them as identifiers in a REST API:
 Jackson serialisation, JPA/Hibernate mapping and Spring Boot auto-configuration.
@@ -12,6 +15,22 @@ Ulid id = Ulid.random();   // 01K49B3X7K2QZ4T7S6M9GVFP8E
 id.getInstant();           // 2026-09-01T18:30:12.345Z, the id carries its creation time
 id.toUuid();               // same 128 bits as a java.util.UUID
 ```
+
+## Contents
+
+- [Modules](#modules)
+- [Getting it](#getting-it)
+- [ULID](#ulid)
+- [UUIDv7 and UUID helpers](#uuidv7-and-uuid-helpers)
+- [Spring Boot](#spring-boot)
+- [Persistence](#persistence)
+- [UUIDv7 in the database, ULID in the API](#uuidv7-in-the-database-ulid-in-the-api)
+- [Bean Validation](#bean-validation)
+- [Jackson without Spring](#jackson-without-spring)
+- [Example applications](#example-applications)
+- [Building](#building)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Modules
 
@@ -345,6 +364,12 @@ and 21 and the library modules on JDK 8 and 11.
 
 The base32 codec is checked against an independent reference implementation, and the timestamp
 extraction against the test vectors in RFC 9562 (versions 1, 6 and 7).
+
+## Contributing
+
+Bug reports and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to
+build and test locally, and [SECURITY.md](SECURITY.md) for reporting vulnerabilities. Release
+history is in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 

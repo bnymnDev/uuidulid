@@ -1,0 +1,35 @@
+name: Feature request
+description: Suggest an addition or a change
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: The use case, not the solution. What is missing or awkward today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: API sketch, configuration property, or behaviour you have in mind.
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      multiple: true
+      options:
+        - uuidulid-core
+        - uuidulid-jackson
+        - uuidulid-jpa
+        - uuidulid-jpa-javax
+        - uuidulid-hibernate
+        - uuidulid-validation
+        - uuidulid-spring-boot-starter
+        - uuidulid-spring-boot2-starter
+        - new module
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
